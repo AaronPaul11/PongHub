@@ -172,7 +172,7 @@ tbody tr td:last-child {
 
 .tabs {
   display: flex;
-  align-items: center;
+  align-items: bottom;
   gap: 6px;
   margin-bottom: 36px;
   padding-bottom: 4px;
