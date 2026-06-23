@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <title>Rankings — Aaron's Basement Table Tennis</title>
+</head>
+<body>
+  <div class="page">
+    <nav class="tabs">
+      <img src="logo.png" alt="League logo" class="logo">
+      <a href="index.html">Main</a>
+      <a href="rankings.html" class="active">Rankings</a>
+      <a href="history.html">Match history</a>
+    </nav>
+
+    <h1>Rankings</h1>
+
+    <button id="admin-btn">Enter admin mode</button>
+
+    <form id="add-player-form" style="display: none;">
+      <input type="text" id="new-player-name" placeholder="Player name" required>
+      <button type="submit">Add player</button>
+    </form>
+
+    <form id="match-form" style="display: none;">
+      <select id="player1"></select>
+      vs
+      <select id="player2"></select>
+      <br>
+      <input type="number" id="score1" placeholder="Player 1 score" required>
+      <input type="number" id="score2" placeholder="Player 2 score" required>
+      <br>
+      <button type="submit">Submit match</button>
+    </form>
+
+    <div id="leaderboard"></div>
+  </div>
+
+  <script src="app.js"></script>
+  <script type="module">
+    import { db, collection, getDocs, doc, updateDoc, addDoc, deleteDoc, serverTimestamp } from "./firebase.js";
+
+    window.db = db;
+    window.doc = doc;
+    window.updateDoc = updateDoc;
+    window.addDoc = addDoc;
+    window.deleteDoc = deleteDoc;
+    window.collection = collection;
+    window.getDocs = getDocs;
+    window.serverTimestamp = serverTimestamp;
+
+    const playersSnapshot = await getDocs(collection(db, "players"));
+    const players = playersSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    window.players = players;
+
+    renderLeaderboard(players);
+    populateDropdowns(players);
+  </script>
+</body>
+</html>

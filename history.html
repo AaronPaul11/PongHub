@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+  <title>Match History — Aaron's Basement Table Tennis</title>
+</head>
+<body>
+  <div class="page">
+    <nav class="tabs">
+      <img src="logo.png" alt="League logo" class="logo">
+      <a href="index.html">Main</a>
+      <a href="rankings.html">Rankings</a>
+      <a href="history.html" class="active">Match history</a>
+    </nav>
+
+    <h1>Match History</h1>
+
+    <div id="history-list"></div>
+  </div>
+
+<script>
+  function renderHistory(matches) {
+    if (matches.length === 0) {
+      document.getElementById("history-list").innerHTML = "<p class='empty-state'>No matches played yet.</p>";
+      return;
+    }
+
+    let cardsHtml = "";
+    matches.forEach(match => {
+      const date = match.timestamp ? match.timestamp.toDate().toLocaleDateString() : "";
+      cardsHtml += `
+        <div class="match-card">
+          <div class="match-players">
+            <span class="${match.winner === match.player1 ? 'winner' : ''}">${match.player1}</span>
+            <span class="score">${match.score1} – ${match.score2}</span>
+            <span class="${match.winner === match.player2 ? 'winner' : ''}">${match.player2}</span>
+          </div>
+          <div class="match-meta">
+            <span>${date}</span>
+            <span class="elo-change">+${match.eloChange} elo</span>
+          </div>
+        </div>
+      `;
+    });
+
+    document.getElementById("history-list").innerHTML = cardsHtml;
+  }
+</script>
+
+  <script type="module">
+    import { db, collection, getDocs, query, orderBy } from "./firebase.js";
+
+    const matchesQuery = query(collection(db, "matches"), orderBy("timestamp", "desc"));
+    const matchesSnapshot = await getDocs(matchesQuery);
+    const matches = matchesSnapshot.docs.map(doc => doc.data());
+
+    renderHistory(matches);
+  </script>
+</body>
+</html>
