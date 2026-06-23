@@ -174,7 +174,7 @@ tbody tr td:last-child {
   display: flex;
   align-items: bottom;
   gap: 6px;
-  margin-bottom: 36px;
+  margin-bottom: 0px;
   padding-bottom: 4px;
   border-bottom: 1px solid #3A3733;
 }
