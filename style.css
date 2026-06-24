@@ -172,8 +172,9 @@ tbody tr td:last-child {
 
 .tabs {
   display: flex;
-  align-items: bottom;
+  align-items: center;
   gap: 6px;
+  margin-bottom: 36px;
   padding-bottom: 4px;
   border-bottom: 1px solid #3A3733;
 }
@@ -271,8 +272,7 @@ tbody tr td:last-child {
 }
 
 @media (max-width: 600px) {
-
-#leaderboard {
+  #leaderboard {
     overflow-x: visible;
     padding: 4px;
   }
@@ -295,7 +295,6 @@ tbody tr td:last-child {
     padding: 4px 8px;
     font-size: 11px;
   }
-}
 
   .page {
     padding: 24px 16px 60px;
@@ -332,8 +331,4 @@ tbody tr td:last-child {
     flex-direction: column;
     align-items: flex-start;
   }
-
-  td, th {
-    padding: 10px 8px;
-    font-size: 13px;
-  }
+}
