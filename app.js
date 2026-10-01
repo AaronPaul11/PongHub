@@ -1,6 +1,7 @@
 console.log("app.js is connected");
 
 function renderLeaderboard(players) {
+  players = players.filter(player => (player.wins + player.losses) >= 5);
   players.sort((a, b) => b.elo - a.elo);
 
   let rowsHtml = "";
